@@ -5,9 +5,9 @@
       "admissionNumber": "S001",
       "name": "Student 1",
       "grade": "Grade 4",
-      "amountPaid": 12000,
+      "amountPaid": 12156,
       "totalFees": 20000,
-      "paymentStatus": "Paid"
+      "paymentStatus": "Partial"
     },
     {
       "id": "2",
@@ -53,15 +53,6 @@
       "amountPaid": 25000,
       "totalFees": 25000,
       "paymentStatus": "Paid"
-    },
-    {
-      "id": "7",
-      "admissionNumber": "S007",
-      "name": "Student 7",
-      "grade": "Grade 2",
-      "amountPaid": 17670,
-      "totalFees": 20000,
-      "paymentStatus": "Partial"
     }
   ],
   "users": [
