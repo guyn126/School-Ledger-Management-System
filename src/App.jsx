@@ -113,7 +113,7 @@ function App() {
   }
 
   return (
-    // 🔥 AJOUT : Envelopper tout dans ThemeProvider
+    // Add to the them provider
     <ThemeProvider>
       <Router>
         <div className="app-container">
