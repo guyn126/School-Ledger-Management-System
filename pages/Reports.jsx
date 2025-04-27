@@ -8,6 +8,9 @@ const Reports = ({ selectedTerm }) => {
   useEffect(() => {
     if (selectedTerm) {
       fetchStudents(selectedTerm);
+    } else {
+      // If no term is selected, stop loading and show no data
+      setLoading(false);
     }
   }, [selectedTerm]);
 
@@ -18,15 +21,22 @@ const Reports = ({ selectedTerm }) => {
       'Term 3': 'http://localhost:3000/Term3',
     };
 
+    setLoading(true); // Ensure loading state is set to true before fetching
     fetch(termEndpoint[term])
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then((data) => {
         setStudents(data);
-        setLoading(false);
+        setLoading(false); // Stop loading when data is fetched successfully
       })
       .catch((error) => {
         console.error('Error fetching students:', error);
-        setLoading(false);
+        setStudents([]); // Clear students in case of error
+        setLoading(false); // Stop loading when an error occurs
       });
   };
 
@@ -91,6 +101,8 @@ const Reports = ({ selectedTerm }) => {
           <div className="legend-item pending">Pending</div>
         </div>
       </div>
+
+     
     </motion.div>
   );
 };
