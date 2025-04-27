@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import Reports from './pages/Reports';
-import Settings from './pages/Settings';
-import './styles.css';
+import Dashboard from '../pages/Dashboard';
+import Reports from '../pages/Reports';
+import Settings from '../pages/Settings';
 import StudentList from './components/StudentList';
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css';  // Import Toastify styles

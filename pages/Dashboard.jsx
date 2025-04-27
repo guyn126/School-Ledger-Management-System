@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import AddStudent from '../components/AddStudent';
-import FilterStudents from '../components/FilterStudents';
-import StudentDetails from '../components/StudentDetails';
+import AddStudent from '../src/components/AddStudent';
+import FilterStudents from '../src/components/FilterStudents';
+import StudentDetails from '../src/components/StudentDetails';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
