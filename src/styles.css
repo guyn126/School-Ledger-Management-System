@@ -6,7 +6,7 @@
   --light-color: #f8f9fa;
   --dark-color: #343a40;
   --success-color: #4CAF50;
-  --warning-color: #FFC107;
+  --warning-color: #e04343;
   --danger-color: #F44336;
 }
 
@@ -68,7 +68,7 @@ body {
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(212, 200, 200, 0.1);
 }
 
 /* Dashboard Styles */
@@ -806,4 +806,150 @@ tr:hover {
   .content {
     padding: 1rem;
   }
+}
+
+/* GLOBAL DARK/LIGHT MODE */
+
+body.light {
+  background-color: #f5f7fa; 
+  color: #333;
+}
+
+body.dark {
+  background-color: #1f2937; 
+  color: #f3f4f6;
+}
+
+/* Navbar adaptation*/
+body.dark .navbar {
+  background-color: #374151;
+}
+
+body.dark .nav-link {
+  color: #f3f4f6;
+}
+
+body.dark .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Cards adaptation*/
+body.dark .card,
+body.dark .settings-card,
+body.dark .stat-card,
+body.dark .chart-placeholder,
+body.dark .student-list-content,
+body.dark .student-details,
+body.dark .confirmation-content {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+/*Form adaptation */
+body.dark .form-group input,
+body.dark .form-group select {
+  background-color: #4b5563;
+  border: 1px solid #6b7280;
+  color: #f3f4f6;
+}
+
+body.dark .form-group label {
+  color: #d1d5db;
+}
+
+/* Table adaptation */
+body.dark table {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+body.dark th {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+body.dark tr:nth-child(even) {
+  background-color: #2d3748;
+}
+
+/* Sidebar adaptation */
+body.dark .sidebar,
+body.dark .sidebar2 {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+/* === Buttons adaptation === */
+body.dark .add-button,
+body.dark .delete-button,
+body.dark .clear-filters,
+body.dark .search-btn,
+body.dark .confirm-button,
+body.dark .cancel-button,
+body.dark .backup-button,
+body.dark .reset-button,
+body.dark .collapse-btn,
+body.dark .expand-btn,
+body.dark .collapse-toggle2 {
+  background-color: #4b5563;
+  color: white;
+}
+
+body.dark .add-button:hover,
+body.dark .delete-button:hover,
+body.dark .clear-filters:hover,
+body.dark .search-btn:hover,
+body.dark .confirm-button:hover,
+body.dark .cancel-button:hover,
+body.dark .backup-button:hover,
+body.dark .reset-button:hover,
+body.dark .collapse-btn:hover,
+body.dark .expand-btn:hover,
+body.dark .collapse-toggle2:hover {
+  background-color: #6b7280;
+}
+
+/* Dark mode button */
+body.dark .add-student-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+body.dark .add-student-btn:hover {
+  background-color: #3a5a8f;
+}
+
+body.dark .search-btn {
+  background-color: var(--success-color);
+  color: white;
+}
+
+body.dark .search-btn:hover {
+  background-color: #45a049;
+}
+
+body.dark .clear-filters-btn {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+input,
+select,
+textarea {
+  color: #212529; 
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  color: white; 
+}
+
+label {
+  color: #212529;
+}
+
+/* Labels en Dark Mode */
+body.dark label {
+  color: white; 
 }

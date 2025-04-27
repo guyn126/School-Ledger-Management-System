@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Users, UserPlus } from 'lucide-react';
+import { useTheme } from '../ThemeContext'; // Add dark mode
 
 const Navbar = () => {
+  const { darkMode, toggleTheme } = useTheme(); // Add button
+
   return (
     <motion.nav
       initial={{ opacity: 0 }}
@@ -21,14 +24,14 @@ const Navbar = () => {
       {/* Navbar Links */}
       <div className="navbar-links">
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/students" className="nav-link">
+          <Link to="/studentlist" className="nav-link"> 
             <Users size={20} />
             <span>Student List</span>
           </Link>
         </motion.div>
 
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/admit" className="nav-link">
+          <Link to="/" className="nav-link"> {/* corrigé ici */}
             <UserPlus size={20} />
             <span>Admit Student</span>
           </Link>
@@ -44,6 +47,13 @@ const Navbar = () => {
           <Link to="/settings" className="nav-link">
             Settings
           </Link>
+        </motion.div>
+
+        {/* Dark Mode Toggle Button */}
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <button onClick={toggleTheme} className="nav-link" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
         </motion.div>
       </div>
     </motion.nav>

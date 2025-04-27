@@ -89,7 +89,7 @@ const FilterStudents = ({ filter, setFilter, students, setSelectedStudent }) => 
         </select>
       </div>
 
-      <button onClick={clearFilters} className="clear-filters">
+      <button onClick={clearFilters} className="clear-filters clear-filters-btn">
         Clear Filters
       </button>
     </div>

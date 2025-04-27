@@ -1097,6 +1097,16 @@
       "amountPaid": 500000,
       "term": "Term 1",
       "feeStatus": "partial"
+    },
+    {
+      "id": "c19c",
+      "name": "New Student",
+      "feeStatus": "pending"
+    },
+    {
+      "id": "06a3",
+      "name": "New Student",
+      "feeStatus": "pending"
     }
   ],
   "users": [
