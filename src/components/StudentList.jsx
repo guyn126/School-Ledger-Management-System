@@ -1,122 +1,143 @@
-import { useState } from 'react';
-import { Trash2, DollarSign } from 'lucide-react';
-import { useStudents } from '../components/StudentContext';
+import { useState, useEffect } from "react";
 
-export default function StudentList() {
-  const { students, deleteStudent, adjustPayment } = useStudents();
-  const [gradeFilter, setGradeFilter] = useState('');
-  const [paymentFilter, setPaymentFilter] = useState('');
+const StudentList = () => {
+  const [allStudents, setAllStudents] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [gradeFilter, setGradeFilter] = useState("");
+  const [paymentFilter, setPaymentFilter] = useState("");
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [paymentAmount, setPaymentAmount] = useState(0);
 
-  const filteredStudents = students.filter(student => {
+  // Fetch students data from the backend API
+  useEffect(() => {
+    fetch("http://localhost:5000/students")
+      .then((res) => res.json())
+      .then((data) => {
+        // Add a `feeStatus` field to each student object
+        const studentsWithStatus = data.map((student) => ({
+          ...student,
+          feeStatus:
+            student.amountPaid === 50000
+              ? "paid"
+              : student.amountPaid > 0
+              ? "partial"
+              : "pending",
+        }));
+        setAllStudents(studentsWithStatus);
+        setStudents(studentsWithStatus);
+      })
+      .catch((err) => console.error("Fetch error:", err));
+  }, []);
+
+  // Filter students by grade
+  useEffect(() => {
+    if (gradeFilter === "") {
+      setStudents(allStudents);
+    } else {
+      const filteredStudents = allStudents.filter(
+        (student) => student.grade === gradeFilter
+      );
+      setStudents(filteredStudents);
+    }
+  }, [gradeFilter, allStudents]);
+
+  // Filter students based on grade and payment status
+  const filteredStudents = students.filter((student) => {
     const matchesGrade = !gradeFilter || student.grade === gradeFilter;
-    const matchesPayment = !paymentFilter || student.paymentStatus === paymentFilter;
+    const matchesPayment =
+      !paymentFilter || student.feeStatus === paymentFilter;
     return matchesGrade && matchesPayment;
   });
 
+  // Handle payment submission
   const handlePaymentSubmit = (studentId) => {
     if (paymentAmount <= 0) {
-      alert('Please enter a valid payment amount');
+      alert("Please enter a valid payment amount");
       return;
     }
     adjustPayment(studentId, paymentAmount);
     setSelectedStudent(null);
-    setPaymentAmount(0);
+  };
+
+  // Simulate payment adjustment (replace with actual API call)
+  const adjustPayment = (studentId, amount) => {
+    console.log(`Adjusting payment for student ${studentId}: KES ${amount}`);
+    // Update the student's payment in the backend and refresh the state
   };
 
   return (
-    <div className="student-list">
-      <div className="filters">
-        <select
-          value={gradeFilter}
-          onChange={(e) => setGradeFilter(e.target.value)}
-          className="grade-filter"
-        >
-          <option value="">All Grades</option>
-          <option value="Grade 1">Grade 1</option>
-          <option value="Grade 2">Grade 2</option>
-          <option value="Grade 3">Grade 3</option>
-        </select>
-        <select
-          value={paymentFilter}
-          onChange={(e) => setPaymentFilter(e.target.value)}
-          className="payment-filter"
-        >
-          <option value="">All Payment Status</option>
-          <option value="Paid">Paid</option>
-          <option value="Partial">Partial</option>
-          <option value="Unpaid">Unpaid</option>
-        </select>
-      </div>
+    <div>
+      {/* Grade Filter */}
+      <select
+        value={gradeFilter}
+        onChange={(e) => setGradeFilter(e.target.value)}
+      >
+        <option value="">All Grades</option>
+        <option value="Grade 1">Grade 1</option>
+        <option value="Grade 2">Grade 2</option>
+        <option value="Grade 3">Grade 3</option>
+      </select>
 
-      <div className="table-container">
-        <table className="student-table">
-          <thead>
-            <tr>
-              <th>Admission No.</th>
-              <th>Name</th>
-              <th>Grade</th>
-              <th>Amount Paid</th>
-              <th>Balance</th>
-              <th>Payment Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredStudents.map((student) => (
-              <tr key={student.id}>
-                <td>{student.admissionNumber}</td>
-                <td>{student.name}</td>
-                <td>{student.grade}</td>
-                <td>{student.amountPaid}</td>
-                <td>{student.totalFees - student.amountPaid}</td>
-                <td>{student.paymentStatus}</td>
-                <td>
+      {/* Payment Status Filter */}
+      <select
+        value={paymentFilter}
+        onChange={(e) => setPaymentFilter(e.target.value)}
+      >
+        <option value="">All Payment Statuses</option>
+        <option value="paid">Paid</option>
+        <option value="partial">Partial</option>
+        <option value="pending">Pending</option>
+      </select>
+
+      {/* Display Students */}
+      <table>
+        <thead>
+          <tr>
+            <th>Admission No.</th>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>Amount Paid</th>
+            <th>Fee Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredStudents.map((student) => (
+            <tr key={student.id}>
+              <td>{student.admissionNumber}</td>
+              <td>{student.name}</td>
+              <td>{student.grade}</td>
+              <td>KES {student.amountPaid}</td>
+              <td>{student.feeStatus}</td>
+              <td>
+                {selectedStudent === student.id ? (
                   <div>
-                    {selectedStudent === student.id ? (
-                      <div>
-                        <input
-                          type="number"
-                          value={paymentAmount}
-                          onChange={(e) => setPaymentAmount(Number(e.target.value))}
-                          className="payment-input"
-                          placeholder="Amount"
-                        />
-                        <button
-                          onClick={() => handlePaymentSubmit(student.id)}
-                          className="save-btn"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => setSelectedStudent(null)}
-                          className="cancel-btn"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => setSelectedStudent(student.id)}
-                        className="adjust-btn"
-                      >
-                        <DollarSign />
-                      </button>
-                    )}
-                    <button
-                      onClick={() => deleteStudent(student.id)}
-                      className="delete-btn"
-                    >
-                      <Trash2 />
+                    <input
+                      type="number"
+                      value={paymentAmount}
+                      onChange={(e) => setPaymentAmount(Number(e.target.value))}
+                      placeholder="Enter amount"
+                      min="0"
+                    />
+                    <button onClick={() => handlePaymentSubmit(student.id)}>
+                      Save
+                    </button>
+                    <button onClick={() => setSelectedStudent(null)}>
+                      Cancel
                     </button>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                ) : (
+                  <button onClick={() => setSelectedStudent(student.id)}>
+                    Adjust Payment
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
+
+export default StudentList;
