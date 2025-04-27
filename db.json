@@ -1098,5 +1098,12 @@
       "term": "Term 1",
       "feeStatus": "partial"
     }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin"
+    }
   ]
 }

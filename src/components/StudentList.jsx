@@ -1,194 +1,142 @@
-import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import DeleteConfirmation from './DeleteConfirmation';
-import StudentTable from './StudentTable';
-import Sidebar from './Sidebar';
-import Sidebar2 from './Sidebar2'; // Import Sidebar2
+import { useState, useEffect } from "react";
 
-const StudentList = ({ deleteStudent, currentDate }) => {
-  const [allStudents, setAllStudents] = useState([]); 
-  const [students, setStudents] = useState([]);       
-  const [studentToDelete, setStudentToDelete] = useState(null);
-  const [gradeFilter, setGradeFilter] = useState('');
-  const [blurred, setBlurred] = useState(false); 
+const StudentList = () => {
+  const [allStudents, setAllStudents] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [gradeFilter, setGradeFilter] = useState("");
+  const [paymentFilter, setPaymentFilter] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [paymentAmount, setPaymentAmount] = useState(0);
 
+  // Fetch students data from the backend API
   useEffect(() => {
     fetch("http://localhost:5000/students")
       .then((res) => res.json())
       .then((data) => {
-        const studentsWithStatus = data.map(student => ({
+        // Add a `feeStatus` field to each student object
+        const studentsWithStatus = data.map((student) => ({
           ...student,
-          feeStatus: student.amountPaid === 50000 ? 'paid' : student.amountPaid > 0 ? 'partial' : 'pending'
+          feeStatus:
+            student.amountPaid === 50000
+              ? "paid"
+              : student.amountPaid > 0
+              ? "partial"
+              : "pending",
         }));
         setAllStudents(studentsWithStatus);
-        setStudents(studentsWithStatus); 
+        setStudents(studentsWithStatus);
       })
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
+  // Filter students by grade
   useEffect(() => {
-    if (gradeFilter === '') {
-      setStudents(allStudents); 
+    if (gradeFilter === "") {
+      setStudents(allStudents);
     } else {
-      const filteredStudents = allStudents.filter(student => student.grade === gradeFilter);
+      const filteredStudents = allStudents.filter(
+        (student) => student.grade === gradeFilter
+      );
       setStudents(filteredStudents);
     }
   }, [gradeFilter, allStudents]);
 
-  const handleDelete = (student) => {
-    setStudentToDelete(student);
+  // Filter students based on grade and payment status
+  const filteredStudents = students.filter((student) => {
+    const matchesGrade = !gradeFilter || student.grade === gradeFilter;
+    const matchesPayment =
+      !paymentFilter || student.feeStatus === paymentFilter;
+    return matchesGrade && matchesPayment;
+  });
+
+  // Handle payment submission
+  const handlePaymentSubmit = (studentId) => {
+    if (paymentAmount <= 0) {
+      alert("Please enter a valid payment amount");
+      return;
+    }
+    adjustPayment(studentId, paymentAmount);
+    setSelectedStudent(null);
   };
 
-  const confirmDelete = () => {
-    deleteStudent(studentToDelete.id);
-    setAllStudents(prev => prev.filter(student => student.id !== studentToDelete.id));
-    setStudents(prev => prev.filter(student => student.id !== studentToDelete.id));
-    setStudentToDelete(null);
+  // Simulate payment adjustment (replace with actual API call)
+  const adjustPayment = (studentId, amount) => {
+    console.log(`Adjusting payment for student ${studentId}: KES ${amount}`);
+    // Update the student's payment in the backend and refresh the state
   };
-
-  const cancelDelete = () => {
-    setStudentToDelete(null);
-  };
-
-  const handleUpdateFee = (id, newAmountPaid) => {
-    const feeStatus =
-      newAmountPaid === 50000
-        ? 'paid'
-        : newAmountPaid > 0
-        ? 'partial'
-        : 'pending';
-
-    const updated = allStudents.map(student => {
-      if (student.id === id) {
-        return { ...student, amountPaid: newAmountPaid, feeStatus };
-      }
-      return student;
-    });
-
-    setAllStudents(updated);
-    setStudents(updated);
-
-    fetch(`http://localhost:5000/students/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amountPaid: newAmountPaid, feeStatus: feeStatus }),
-    })
-      .then(res => res.json())
-      .then(data => console.log("Updated student fee and status:", data))
-      .catch(err => console.error("Update fee error:", err));
-  };
-
-  const calculateDeficit = (amountPaid) => {
-    const totalFee = 50000;
-    return totalFee - amountPaid;
-  };
-
-  const handlePendingFees = (term) => {
-    const updatedStudents = students.map(student => ({
-      ...student,
-      feeStatus: 'pending' 
-    }));
-    setStudents(updatedStudents); 
-    setBlurred(true); 
-  };
-
-  const summary = useMemo(() => {
-    const totalFee = 50000;
-    const totalExpected = students.length * totalFee;
-    const fullyPaid = students.filter(s => s.feeStatus === 'paid').reduce((sum, s) => sum + s.amountPaid, 0);
-    const partiallyPaid = students.filter(s => s.feeStatus === 'partial').reduce((sum, s) => sum + s.amountPaid, 0);
-    const totalPaid = fullyPaid + partiallyPaid;
-    const totalPending = totalExpected - totalPaid;
-
-    return {
-      totalExpected,
-      fullyPaid,
-      partiallyPaid,
-      totalPending
-    };
-  }, [students]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="student-list-container"
-    >
-      <div className="sidebar-container">
-        <Sidebar handleGradeFilter={setGradeFilter} />
-        <Sidebar2 currentDate={new Date()} handlePendingFees={handlePendingFees} setBlurred={setBlurred} />
-      </div>
+    <div>
+      {/* Grade Filter */}
+      <select
+        value={gradeFilter}
+        onChange={(e) => setGradeFilter(e.target.value)}
+      >
+        <option value="">All Grades</option>
+        <option value="Grade 1">Grade 1</option>
+        <option value="Grade 2">Grade 2</option>
+        <option value="Grade 3">Grade 3</option>
+      </select>
 
-      <div className="student-list-content">
-        <motion.h2 
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          Student Records ({students.length})
-        </motion.h2>
+      {/* Payment Status Filter */}
+      <select
+        value={paymentFilter}
+        onChange={(e) => setPaymentFilter(e.target.value)}
+      >
+        <option value="">All Payment Statuses</option>
+        <option value="paid">Paid</option>
+        <option value="partial">Partial</option>
+        <option value="pending">Pending</option>
+      </select>
 
-        {/* Summary Section */}
-        <motion.div 
-          className="summary"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          style={{
-            marginBottom: '1rem',
-            backgroundColor: '#f8f9fa',
-            padding: '1rem',
-            borderRadius: '10px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem'
-          }}
-        >
-          <div><strong>Total Expected:</strong> KES {summary.totalExpected.toLocaleString()}</div>
-          <div><strong>Fully Paid:</strong> KES {summary.fullyPaid.toLocaleString()}</div>
-          <div><strong>Partially Paid:</strong> KES {summary.partiallyPaid.toLocaleString()}</div>
-          <div><strong>Pending:</strong> KES {summary.totalPending.toLocaleString()}</div>
-        </motion.div>
-
-        <AnimatePresence>
-          {students.length === 0 ? (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="no-students"
-            >
-              No students found. Add some students to get started.
-            </motion.p>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <StudentTable 
-                students={students} 
-                handleDelete={handleDelete}
-                updateStudentFee={handleUpdateFee}
-                calculateDeficit={calculateDeficit}
-                blurred={blurred}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {studentToDelete && (
-            <DeleteConfirmation
-              student={studentToDelete}
-              onConfirm={confirmDelete}
-              onCancel={cancelDelete}
-            />
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+      {/* Display Students */}
+      <table>
+        <thead>
+          <tr>
+            <th>Admission No.</th>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>Amount Paid</th>
+            <th>Fee Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredStudents.map((student) => (
+            <tr key={student.id}>
+              <td>{student.admissionNumber}</td>
+              <td>{student.name}</td>
+              <td>{student.grade}</td>
+              <td>KES {student.amountPaid}</td>
+              <td>{student.feeStatus}</td>
+              <td>
+                {selectedStudent === student.id ? (
+                  <div>
+                    <input
+                      type="number"
+                      value={paymentAmount}
+                      onChange={(e) => setPaymentAmount(Number(e.target.value))}
+                      placeholder="Enter amount"
+                      min="0"
+                    />
+                    <button onClick={() => handlePaymentSubmit(student.id)}>
+                      Save
+                    </button>
+                    <button onClick={() => setSelectedStudent(null)}>
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => setSelectedStudent(student.id)}>
+                    Adjust Payment
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
