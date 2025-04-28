@@ -71,13 +71,6 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
       <div className="settings-card">
         <h2>Application Settings</h2>
 
-        <div className="setting-item">
-          <label>Theme</label>
-          <select value={theme} onChange={handleThemeChange}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </div>
         
         <div className="setting-item">
           <label>Notifications</label>

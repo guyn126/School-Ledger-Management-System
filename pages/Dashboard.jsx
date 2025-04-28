@@ -19,7 +19,7 @@ const Dashboard = ({ addStudent, deleteStudent, updateStudentFee, updateStudent 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/students/Term1");
+        const response = await fetch("http://localhost:3000/students/Term1");
         const data = await response.json();
         const studentsWithStatus = data.map(student => ({
           ...student,
