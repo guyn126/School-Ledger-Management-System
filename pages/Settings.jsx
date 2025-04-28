@@ -71,7 +71,6 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
       <div className="settings-card">
         <h2>Application Settings</h2>
 
-        
         <div className="setting-item">
           <label>Notifications</label>
           <input type="checkbox" defaultChecked />
@@ -85,47 +84,6 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
         <div className="setting-item">
           <label>Date of the Year</label>
           <div>{dateOfYear.toDateString()}</div>
-        </div>
-
-        <div className="setting-item">
-          <form onSubmit={handleFormSubmit}>
-            <label>Select Term</label>
-            <div className="radio-buttons">
-              <label>
-                <input 
-                  type="radio" 
-                  name="term" 
-                  value="Term 1" 
-                  checked={selectedTerm === 'Term 1'} 
-                  onChange={handleTermChangeInternal}
-                />
-                Term1
-              </label>
-              <label>
-                <input 
-                  type="radio" 
-                  name="term" 
-                  value="Term 2" 
-                  checked={selectedTerm === 'Term 2'} 
-                  onChange={handleTermChangeInternal}
-                />
-                Term2
-              </label>
-              <label>
-                <input 
-                  type="radio" 
-                  name="term" 
-                  value="Term 3" 
-                  checked={selectedTerm === 'Term 3'} 
-                  onChange={handleTermChangeInternal}
-                />
-                Term3
-              </label>
-            </div>
-            <button type="submit" className="submit-button">Term</button>
-          </form>
-          <p>Selected Term: {selectedTerm}</p>
-          {termUpdateMessage && <p className="term-notification">{termUpdateMessage}</p>}
         </div>
       </div>
     </div>

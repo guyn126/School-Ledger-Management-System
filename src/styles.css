@@ -18,8 +18,8 @@
 }
 
 body {
-  background-image: #c5cad3;
-  color: #333;
+  background-color: var(--light-color);
+  color: var(--dark-color);
   line-height: 1.6;
 }
 
@@ -85,7 +85,7 @@ body {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
 }
 
@@ -125,14 +125,6 @@ body {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-}
-
-.form-group select {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1rem;
 }
 
 /* Button Styles */
@@ -448,8 +440,7 @@ tr:hover {
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 2rem;
- width: 500px;
- 
+  width: 500px;
   margin: 2rem auto;
   z-index: 10;
   animation: slideIn 0.3s ease-out;
@@ -535,7 +526,7 @@ tr:hover {
 .close-button {
   position: absolute;
   top: 1rem;
- left: 1rem;
+  left: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
   color: #888;
@@ -545,7 +536,7 @@ tr:hover {
 .close-button:hover {
   color: #000;
 }
-.content{
+.content {
   width: 100vw;
   position: relative;
 }
@@ -556,7 +547,7 @@ tr:hover {
   gap: 2rem;
   padding: 2rem;
   width: 1500px;
- margin-right: 600px;
+  margin-right: 600px;
 }
 
 .student-list-content {
@@ -565,11 +556,9 @@ tr:hover {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  min-width: 0; /* Add this for flex child overflow issues */
+  min-width: 0;
   width: 1400px;
-  
 }
-
 
 /* Sidebar Container */
 .sidebar-container {
@@ -579,9 +568,8 @@ tr:hover {
   width: 260px;
   min-width: 250px;
   position: absolute;
-  left:0;
+  left: 0;
   transform: translateX(-290px);
-  
 }
 
 /* Sidebar Base Styling */
@@ -593,10 +581,7 @@ tr:hover {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   color: #fff;
   font-size: 0.95rem;
- 
 }
-
-
 
 /* Summary Section */
 .summary {
@@ -609,17 +594,16 @@ tr:hover {
   gap: 1.2rem;
 }
 
-
 .student-table {
-  width: 100%;            /* Ensures the table takes full width of its container */
-  max-width: 100%;    /* Limits the table width to 1200px */
-  margin: 0 auto;         /* Centers the table within its container */
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   border-collapse: collapse;
   margin-bottom: 2rem;
-  font-size: 1rem;        /* Adjust font size */
+  font-size: 1rem;
 }
-.table-container{
-  width: 1400px;
+.table-container {
+  width: 100%;
 }
 
 .student-table th,
@@ -634,7 +618,6 @@ tr:hover {
   font-weight: 600;
   color: #333;
 }
-
 
 /* Delete Confirmation Modal */
 .delete-confirmation {
@@ -665,7 +648,7 @@ tr:hover {
 }
 .sidebar-header h3 {
   margin: 0;
-  color: #fff; /* Or your desired color */
+  color: #fff;
   background: transparent;
   font-size: 1.2rem;
 }
@@ -683,7 +666,7 @@ tr:hover {
 .expand-btn {
   background: transparent;
   border: none;
-  color: #fff; /* Adjust color as needed */
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
   padding: 0.5rem;
@@ -692,7 +675,7 @@ tr:hover {
 .collapse-btn {
   background: transparent;
   border: none;
-  color: #fff; /* or any color that fits your theme */
+  color: #fff;
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0;
@@ -719,7 +702,6 @@ tr:hover {
   height: 60px;
 }
 
-
 /* Hide term list in collapsed state */
 .term-list2.collapsed-list {
   display: none;
@@ -731,8 +713,8 @@ tr:hover {
   font-size: 0.9rem;
   cursor: pointer;
   margin-bottom: 1rem;
-  width: 100%;            /* Make button take full width */
-  text-align: center;     /* Center the text */
+  width: 100%;
+  text-align: center;
 }
 
 .term-list2.blurred {
@@ -747,10 +729,12 @@ tr:hover {
   margin-top: 1rem;
   text-align: center;
 }
+
 .table-container.blurred {
   filter: blur(5px);
-  pointer-events: none; /* Prevent interactions while blurred */
+  pointer-events: none;
 }
+
 .radio-buttons {
   display: flex;
   justify-content: space-evenly;
@@ -768,31 +752,32 @@ tr:hover {
 }
 
 .term-item2:hover {
-  background-color: #f0f8ff; /* Lighter shade of blue on hover */
+  background-color: #f0f8ff;
 }
 
 .term-item2.selected {
-  background-color: #a0c4ff; /* Lighter blue shade for selected term */
-  color: white; /* Ensure text is readable */
+  background-color: #a0c4ff;
+  color: white;
 }
 
 .term-item2.blurred {
-  color: gray; /* Apply gray color for blurred terms */
-  text-decoration: line-through; /* Optional: apply a line-through for blurred terms */
+  color: gray;
+  text-decoration: line-through;
 }
+
 .grade-item {
   padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .grade-item:hover {
-  background-color: #f0f8ff; /* Lighter shade of blue on hover */
+  background-color: #f0f8ff;
 }
 
 .grade-item.selected {
-  background-color: #a0c4ff; /* Lighter blue shade for selected grade */
-  color: white; /* Ensure text is readable */
+  background-color: #a0c4ff;
+  color: white;
 }
 
 .grade-list {
@@ -812,39 +797,6 @@ tr:hover {
   font-size: 16px;
   cursor: pointer;
 }
-/* Default student list style */
-.term-list2 {
-  transition: filter 0.3s ease-in-out; /* Add transition for smooth blur effect */
-}
-
-.term-list2.blurred {
-  filter: blur(5px); /* Apply blur effect */
-}
-
-.term-item2 {
-  padding: 10px;
-  cursor: pointer;
-}
-
-/* Highlight the selected term */
-.term-item2.selected {
-  background-color: #cce5ff; /* Light blue for selected term */
-  font-weight: bold;
-}
-
-/* Styling for the message */
-.term-message {
-  font-size: 14px;
-  color: #ff0000; /* Red for pass/upcoming message */
-  margin-top: 10px;
-  text-align: center;
-}
-.term-notification {
-  color: green;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -870,55 +822,70 @@ tr:hover {
     flex: 1;
     min-width: 45%;
   }
-}
 
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.slide-up {
-  animation: slideUp 0.5s ease-out;
-}
-
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
   .navbar {
     flex-direction: column;
     padding: 1rem;
   }
-  
+
   .navbar-links {
     margin-top: 1rem;
     width: 100%;
     justify-content: space-around;
   }
-  
+
   .content {
     padding: 1rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-table {
+    width: 100%;
+  }
+
+  .table-container {
+    width: 100%;
+  }
+
+  .sidebar2 {
+    width: 100%;
+  }
+
+  .sidebar2.collapsed {
+    width: 100%;
+    padding: 0.5rem;
+    overflow: hidden;
+    height: auto;
+  }
+
+  .sidebar2.collapsed .collapse-toggle2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sidebar2.collapsed .term-list2 {
+    display: none;
+  }
+
+  .sidebar2.collapsed .selected-term {
+    display: none;
   }
 }
 
 /* GLOBAL DARK/LIGHT MODE */
-
 body.light {
-  background-color: #f5f7fa; 
+  background-color: #f5f7fa;
   color: #333;
 }
 
 body.dark {
-  background-color: #1f2937; 
+  background-color: #1f2937;
   color: #f3f4f6;
 }
 
-/* Navbar adaptation*/
 body.dark .navbar {
   background-color: #374151;
 }
@@ -931,7 +898,6 @@ body.dark .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Cards adaptation*/
 body.dark .card,
 body.dark .settings-card,
 body.dark .stat-card,
@@ -943,7 +909,6 @@ body.dark .confirmation-content {
   color: #f3f4f6;
 }
 
-/*Form adaptation */
 body.dark .form-group input,
 body.dark .form-group select {
   background-color: #4b5563;
@@ -955,40 +920,36 @@ body.dark .form-group label {
   color: #d1d5db;
 }
 
-/* Table adaptation */
 body.dark table {
   background-color: #1f2937;
   color: #f3f4f6;
 }
 
+body.dark th,
+body.dark td {
+  color: #f3f4f6;
+}
+
 body.dark th {
   background-color: #374151;
-  color: #f3f4f6;
 }
 
 body.dark tr:nth-child(even) {
   background-color: #2d3748;
 }
 
-/* Sidebar adaptation */
 body.dark .sidebar,
 body.dark .sidebar2 {
   background-color: #374151;
   color: #f3f4f6;
 }
 
-/* === Buttons adaptation === */
 body.dark .add-button,
 body.dark .delete-button,
 body.dark .clear-filters,
 body.dark .search-btn,
 body.dark .confirm-button,
-body.dark .cancel-button,
-body.dark .backup-button,
-body.dark .reset-button,
-body.dark .collapse-btn,
-body.dark .expand-btn,
-body.dark .collapse-toggle2 {
+body.dark .cancel-button {
   background-color: #4b5563;
   color: white;
 }
@@ -998,16 +959,10 @@ body.dark .delete-button:hover,
 body.dark .clear-filters:hover,
 body.dark .search-btn:hover,
 body.dark .confirm-button:hover,
-body.dark .cancel-button:hover,
-body.dark .backup-button:hover,
-body.dark .reset-button:hover,
-body.dark .collapse-btn:hover,
-body.dark .expand-btn:hover,
-body.dark .collapse-toggle2:hover {
+body.dark .cancel-button:hover {
   background-color: #6b7280;
 }
 
-/* Dark mode button */
 body.dark .add-student-btn {
   background-color: var(--primary-color);
   color: white;
@@ -1034,24 +989,22 @@ body.dark .clear-filters-btn {
 input,
 select,
 textarea {
-  color: #212529; 
+  color: #212529;
 }
 
 body.dark input,
 body.dark select,
 body.dark textarea {
-  color: white; 
+  color: white;
 }
 
 label {
   color: #212529;
 }
 
-
 body.dark label {
-  color: white; 
+  color: white;
 }
-
 
 table {
   width: 100%;
@@ -1063,7 +1016,7 @@ th, td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  color: white; 
+  color: white;
 }
 
 th {
@@ -1073,12 +1026,12 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: #2c3642; 
+  background-color: #2c3642;
 }
 
 tr:hover {
-  background-color: #3a4752; 
-  color: white; 
+  background-color: #3a4752;
+  color: white;
 }
 
 /* Table */
@@ -1092,7 +1045,7 @@ th, td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  color: inherit; 
+  color: inherit;
 }
 
 th {
@@ -1112,36 +1065,36 @@ tr:hover {
 
 /* Light mode */
 body.light {
-  --row-color: #f9f9f9; 
-  --hover-color: #ececec; 
+  --row-color: #f9f9f9;
+  --hover-color: #ececec;
 }
 
 /* Dark mode */
 body.dark {
-  --row-color: #2c3642; 
-  --hover-color: #3a4752; 
+  --row-color: #2c3642;
+  --hover-color: #3a4752;
 }
 
 body.dark input,
 body.dark select,
 body.dark textarea {
-  background-color: #2e3b4e; 
+  background-color: #2e3b4e;
   color: #ffffff;
-  border: 1px solid #555; 
+  border: 1px solid #555;
 }
 
 body.dark input::placeholder,
 body.dark textarea::placeholder {
-  color: #ccc; 
+  color: #ccc;
 }
 
 body.dark thead {
-  background-color: #3a4b63; 
+  background-color: #3a4b63;
 }
 
-body.dark th, 
+body.dark th,
 body.dark td {
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 body.dark tbody tr {
@@ -1149,5 +1102,5 @@ body.dark tbody tr {
 }
 
 body.dark tbody tr:hover {
-  background-color: #2c3a4f; 
+  background-color: #2c3a4f;
 }
