@@ -8,6 +8,9 @@ import StudentList from './components/StudentList';
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css';  // Import Toastify styles
 
+// 🔥 AJOUT : Importer le ThemeProvider
+import { ThemeProvider } from './ThemeContext';
+
 const API_BASE_URL = "http://localhost:5000";
 
 function App() {
@@ -65,7 +68,6 @@ function App() {
       return;
     }
 
-    // Temporarily update state optimistically
     updatedStudents[studentIndex] = {
       ...updatedStudents[studentIndex],
       amountPaid,
@@ -93,7 +95,6 @@ function App() {
       console.log("Updated student fee:", await response.json());
     } catch (err) {
       console.error("Update fee error:", err);
-      // Revert to previous state if update failed
       setStudents(students);
     }
   };
@@ -112,38 +113,41 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="app-container">
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={
-              <Dashboard 
-                students={students} 
-                addStudent={addStudent} 
-                deleteStudent={deleteStudent} 
-                updateStudentFee={updateStudentFee}
-                updateStudent={updateStudent} // Pass updateStudent to Dashboard
-              />
-            } />
-            <Route path="/reports" element={<Reports students={students} />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route 
-              path="/studentlist"  
-              element={
-                <StudentList 
+    // 🔥 AJOUT : Envelopper tout dans ThemeProvider
+    <ThemeProvider>
+      <Router>
+        <div className="app-container">
+          <Navbar />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={
+                <Dashboard 
                   students={students} 
-                  deleteStudent={deleteStudent}
-                  updateStudent={updateStudent} // Pass updateStudent to StudentList
+                  addStudent={addStudent} 
+                  deleteStudent={deleteStudent} 
+                  updateStudentFee={updateStudentFee}
+                  updateStudent={updateStudent}
                 />
-              }
-            />
-          </Routes>
+              } />
+              <Route path="/reports" element={<Reports students={students} />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route 
+                path="/studentlist"  
+                element={
+                  <StudentList 
+                    students={students} 
+                    deleteStudent={deleteStudent}
+                    updateStudent={updateStudent}
+                  />
+                }
+              />
+            </Routes>
+          </div>
         </div>
-      </div>
-      {/* Add ToastContainer */}
-      <ToastContainer position="top-right" autoClose={3000} />
-    </Router>
+        {/* Add ToastContainer */}
+        <ToastContainer position="top-right" autoClose={3000} />
+      </Router>
+    </ThemeProvider>
   );
 }
 

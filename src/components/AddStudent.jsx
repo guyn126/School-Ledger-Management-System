@@ -148,7 +148,7 @@ const AddStudent = ({ addStudent, updateStudent, selectedStudent, setSelectedStu
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="add-button"
+          className="add-button add-student-btn "
         >
           {selectedStudent ? 'Update Student' : 'Add Student'}
         </motion.button>

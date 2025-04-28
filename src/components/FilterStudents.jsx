@@ -115,8 +115,12 @@ const FilterStudents = ({ filter, setFilter, setSelectedStudent }) => {
         </select>
       </div>
 
+
+      <button onClick={clearFilters} className="clear-filters clear-filters-btn">
+
       {/* Button to clear all filters */}
       <button onClick={clearFilters} className="clear-filters">
+
         Clear Filters
       </button>
     </div>

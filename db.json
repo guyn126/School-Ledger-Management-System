@@ -3280,8 +3280,9 @@
       "grade": "Grade 1",
       "amountPaid": null,
       "term": "Term 1",
-      "feeStatus": "pending",
-      "overpayment": 0
+      "feeStatus": "partial"
     }
+  
   ]
+ 
 }
