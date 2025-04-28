@@ -13,9 +13,7 @@ function Sidebar2({ selectedTerm, handlePendingFees, handleTermChange: parentHan
     const current = termOrder[selectedTerm];
     const clicked = termOrder[term];
 
-    console.log('Clicked:', clicked, 'Current:', current); // You can keep or remove this
-
-    // Removed toast logic
+    console.log('Clicked:', clicked, 'Current:', current); 
 
     parentHandleTermChange(term);
   };
