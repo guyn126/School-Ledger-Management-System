@@ -7,9 +7,6 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
     return localStorage.getItem('selectedTerm') || settingsTerm;
   });
   const [termUpdateMessage, setTermUpdateMessage] = useState('');
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
-  });
 
   const updateDate = () => {
     const newDate = new Date();
@@ -30,16 +27,6 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
       .then(data => setStudents(data))
       .catch(error => console.error('Error fetching students data:', error));
   }, []);
-
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
-
-  const handleThemeChange = (e) => {
-    const selectedTheme = e.target.value;
-    setTheme(selectedTheme);
-    localStorage.setItem('theme', selectedTheme);
-  };
 
   const handleTermChangeInternal = (e) => {
     const term = e.target.value;
@@ -75,7 +62,7 @@ const Settings = ({ handleTermChange, settingsTerm }) => {
           <label>Notifications</label>
           <input type="checkbox" defaultChecked />
         </div>
-        
+
         <div className="setting-item">
           <label>Data Backup</label>
           <button className="backup-button" onClick={handleExportData}>Export Data</button>

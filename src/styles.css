@@ -1104,3 +1104,12 @@ body.dark tbody tr {
 body.dark tbody tr:hover {
   background-color: #2c3a4f;
 }
+
+/* Correction of student records */
+body.dark .dashboard-grid > div,
+body.dark .card,
+body.dark .summary {
+  background-color: #374151 !important;
+  color: #f3f4f6 !important;
+}
+
