@@ -1098,6 +1098,15 @@
       "amountPaid": 5000,
       "term": "Term 1",
       "feeStatus": "partial"
+    },
+    {
+      "id": "1745819742622",
+      "name": "levis",
+      "admissionNumber": "6333",
+      "grade": "Grade 4",
+      "amountPaid": 3000,
+      "term": "Term 1",
+      "feeStatus": "partial"
     }
   ],
   "Term2": [
@@ -3282,7 +3291,5 @@
       "term": "Term 1",
       "feeStatus": "partial"
     }
-  
   ]
- 
 }

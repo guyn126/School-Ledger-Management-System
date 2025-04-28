@@ -100,7 +100,7 @@ const StudentList = () => {
                    : selectedTerm === 'Term 2' ? "Term2"
                    : "Term3";
 
-    fetch(`http://localhost:5000/${endpoint}/${id}`, {
+    fetch(`http://localhost:3000/${endpoint}/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amountPaid, overpayment, feeStatus }),
